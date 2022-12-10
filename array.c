@@ -32,5 +32,4 @@ int main(){
     display(arr);
     return 0;
 
-    // ola comma tale tale ouu
 }
