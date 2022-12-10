@@ -31,9 +31,6 @@ int main(){
     printf("\n");
     display(arr);
     return 0;
-<<<<<<< HEAD
-}
-=======
+
     // ola comma tale tale ouu
 }
->>>>>>> c59f86d2ac8a9188a39e828d72abdaf4335307b5
