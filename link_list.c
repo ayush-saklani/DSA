@@ -5,15 +5,14 @@ struct node{
     struct node *next;
     struct node *prev;
 };
-
-struct node* create (struct node * head){
+struct node * create (struct node * head){
     int choice=1;
     head=0;
     while(choice){
         struct node *newnode=(struct node *)malloc (sizeof(struct node));
-        struct node *temp,*tail;
+        struct node *temp;
         newnode->next =newnode->prev=0;
-        printf("enter data ");
+        printf("EEnter data ");
         scanf("%d",&newnode->data);
         if(head==0){
             head=newnode;
@@ -23,7 +22,6 @@ struct node* create (struct node * head){
             temp->next=newnode;
             newnode->prev=temp;
             temp=temp->next;
-            tail=temp;;
         }
         printf("enter 0 to exit and press 1 to continue");
         scanf("%d",&choice);
@@ -37,7 +35,7 @@ void display(struct node * head){
         temp2=temp2->next;
     }
 }
-struct node * insert_at_given_position(struct node * head,int pos){
+struct node * insert_at_given_position  (struct node * head,int pos){
             struct node *inserttemp,*inserttempo,*inserttemp2=head,*ins=head;
             int i=2,count=0;
             inserttemp=(struct node *)malloc (sizeof(struct node));
@@ -49,7 +47,7 @@ struct node * insert_at_given_position(struct node * head,int pos){
             }
             if(pos>count+1){
                 printf("Invalid position");
-                return;
+                return 0;
             }
             else if (pos==1){
                 inserttemp->next=head;
@@ -80,16 +78,16 @@ struct node * insert_at_given_position(struct node * head,int pos){
             }
             return head;
 }
-struct node *  delete_from_given_position(struct node * head,int pos){
+struct node * delete_from_given_position(struct node * head,int pos){
     struct node *deletetemp=head,*deletetemp2,*del=head;
-            int i=2,count=0;
+            int count=0;
             while(del!=0){  //count the number of element
                 count++;
                 del=del->next;
             }
             if(pos>count){
                 printf("Invalid position");
-                return;
+                return 0 ;
             }
             else if (pos==1){
                 head=head->next;
@@ -121,11 +119,52 @@ struct node *  delete_from_given_position(struct node * head,int pos){
             }
             return head;
 }
+struct node * insert_at_end(struct node *head,int datan){
+    struct node *inserttemp,*inserttemp2=head;
+            inserttemp=(struct node *)malloc (sizeof(struct node));
+            inserttemp->data=datan;
+            while(inserttemp2->next!=0){
+                inserttemp2=inserttemp2->next;
+            }
+            inserttemp2->next=inserttemp;
+            inserttemp->next=0;
+            inserttemp->prev=inserttemp2;
+            return head;
+          //  display();
+}
+int count(struct node *head){
+    struct node *temp=head;
+    int counter=0 ;
+    while(temp!=0){
+        counter++;
+        temp=temp->next;
+    }
+    return counter;
+}
+struct node * seperate_positive(struct node *head,struct node *head1){
+    struct node * temp=head,*temp1=head1;
+    int counter = count(temp);
+    for (int i = 0; i < counter; i++){
+        if (temp->data>0){
+            head1=insert_at_end(temp1,temp->data);
+        } 
+        temp=temp->next; 
+    }    
+    return temp1; 
+}
 int main(){
-    struct node *head,*head1,*head2,*tail;
+    struct node *head,*head1=0,*head2=0;
     head=create(head);
     display(head);
-    int choice,choice1;
+    int temp0;
+    temp0=count(head);
+    printf("\n %d",temp0);
+    seperate_positive(head,head1);
+    printf("\n");
+    display(head1);
+  //printf("\n");
+  //display(head2);
+   /* int choice,choice1;
     while (1)
     {
         printf("\nPress 1 for Inserion \n");
@@ -153,5 +192,6 @@ int main(){
         case 5:
             return 0;
         }
-        }
+        }*/
+        return 0;
 }
