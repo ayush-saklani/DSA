@@ -1,3 +1,4 @@
+//it works - made by tempest
 #include<stdio.h>
 #include<stdlib.h>
 struct node{
@@ -90,7 +91,7 @@ struct node * seperate_negative(struct node *head,struct node *head1){
 }
 int main(){
     struct node *head,*head1=0,*head2=0;
-    head=create(head);
+    head=create();
     display(head);
     int temp0;
     temp0=count(head);
