@@ -123,33 +123,47 @@ struct node * insert_at_end(struct node *head,int datan){
     struct node *inserttemp,*inserttemp2=head;
             inserttemp=(struct node *)malloc (sizeof(struct node));
             inserttemp->data=datan;
-            while(inserttemp2->next!=0){
-                inserttemp2=inserttemp2->next;
+            inserttemp->next=inserttemp->prev=0;
+            if (inserttemp2==0){
+                return inserttemp;
             }
-            inserttemp2->next=inserttemp;
-            inserttemp->next=0;
-            inserttemp->prev=inserttemp2;
-            return head;
-          //  display();
+            else if (inserttemp2->next==0)
+            {
+                inserttemp->prev=inserttemp2;
+                inserttemp2->next=inserttemp;   
+            }
+            else {
+                while(inserttemp2->next!=0){
+                    inserttemp2=inserttemp2->next;
+                }
+                inserttemp2->next=inserttemp;
+                inserttemp->next=0;
+                inserttemp->prev=inserttemp2;
+            }
+            return inserttemp;
 }
 int count(struct node *head){
     struct node *temp=head;
-    int counter=0 ;
+    int counter0=0 ;
     while(temp!=0){
-        counter++;
+        counter0++;
         temp=temp->next;
     }
-    return counter;
+    return counter0;
 }
 struct node * seperate_positive(struct node *head,struct node *head1){
-    struct node * temp=head,*temp1=head1;
-    int counter = count(temp);
-    for (int i = 0; i < counter; i++){
-        if (temp->data>0){
-            head1=insert_at_end(temp1,temp->data);
+    struct node * temp=head,*temp0=head,*temp1=head1;
+    int counter1 = count(temp);
+    printf("\n%d",counter1);
+    for (int i = 0; i < counter1; i++){
+        printf("\nworking");
+        if(temp0->data>0){
+            temp0=insert_at_end(temp1,temp0->data);
         } 
-        temp=temp->next; 
-    }    
+        printf("\nworking");
+        temp0=temp0->next; 
+    }   
+     printf("\nworking"); 
     return temp1; 
 }
 int main(){
@@ -159,7 +173,7 @@ int main(){
     int temp0;
     temp0=count(head);
     printf("\n %d",temp0);
-    seperate_positive(head,head1);
+    head1=seperate_positive(head,head1);
     printf("\n");
     display(head1);
   //printf("\n");
