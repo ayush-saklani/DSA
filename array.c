@@ -18,6 +18,7 @@ int main(){
     //54564546
     printf("enter array");
     for(int i=0;i<n;i++){
+        //asdjkshflads
         scanf("%d",(arr+i));
     }
     printf("\n");
