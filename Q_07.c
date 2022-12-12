@@ -117,7 +117,7 @@ int main(){
     }
 }
 /*
-below code is stolen from net and above is done by tempest ;)
+below code is stolen from net and above is done by tempest ;
 #include <stdio.h>
 #include <stdlib.h>
 
