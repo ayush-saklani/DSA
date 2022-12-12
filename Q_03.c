@@ -1,21 +1,27 @@
-//it works - made by tempest
+/*
+This code works - by tempest.
+Write a C program to create a linked list P, then write a ‘C’ function named split to
+create two linked lists Q & R from P So that Q contains all elements in odd positions of
+P and R contains the remaining elements. Finally print both linked lists i.e. Q and R.
+*/
 #include<stdio.h>
 #include<stdlib.h>
+int poso=0;
 struct node{
     int  data;
     struct node *next;
     struct node *prev;
-};
-void display(struct node * head){
-    struct node * temp2=head;
+}*q=0,*r=0;
+void display(struct node * p){
+    struct node * temr=p;
     printf("\n");
-    while(temp2!=NULL){
-        printf("%d ",temp2->data);
-        temp2=temp2->next;
+    while(temr!=NULL){
+        printf("%d ",temr->data);
+        temr=temr->next;
     }
 }
-int count(struct node *head){
-    struct node *temp=head;
+int count(struct node *p){
+    struct node *temp=p;
     int counter0=0 ;
     while(temp!=0){
         counter0++;
@@ -25,16 +31,16 @@ int count(struct node *head){
 }
 struct node * create(){
     int choice=1;
-    struct node * head=0;
+    struct node * p=0;
     while(choice){
         struct node *newnode=(struct node *)malloc (sizeof(struct node));
         newnode->next =newnode->prev=0;
         printf("Enter data ");
         scanf("%d",&newnode->data);
         struct node *temp;
-        if(head==0){
-            head=newnode;
-            temp=head;
+        if(p==0){
+            p=newnode;
+            temp=p;
         }
         else{
             temp->next=newnode;
@@ -44,19 +50,19 @@ struct node * create(){
         printf("Enter 0 to exit \nEnter 1 to continue");
         scanf("%d",&choice);
     }
-    return head ;
+    return p ;
 }
-struct node * insertlast(struct node *heado,int item){
+struct node * insertlast(struct node *po,int item){
     struct node *ptr = (struct node *) malloc(sizeof(struct node));  
-    struct node *temp,*head=heado;  
+    struct node *temp,*p=po;  
     ptr->data=item;  
-    if(head == NULL){  
+    if(p == NULL){  
         ptr->next = NULL;  
         ptr->prev = NULL;  
-        head = ptr;  
+        p = ptr;  
     }  
     else{  
-        temp = head;  
+        temp = p;  
         while(temp->next!=NULL)  
         {  
             temp = temp->next;  
@@ -65,41 +71,37 @@ struct node * insertlast(struct node *heado,int item){
         ptr ->prev=temp;  
         ptr->next = NULL;  
     }
-    return head;
-} 
-struct node * seperate_positive(struct node *head,struct node *head1){
-    struct node * temp=head,*temp0=head,*temp1=head1;
-    int counter1 = count(temp);
-    for (int i = 0; i < counter1; i++){
-        if(temp0->data>0){
-            temp1=insertlast(temp1,temp0->data);
-        }
-        temp0=temp0->next; 
-    }
-    return temp1; 
+    return p ;
 }
-struct node * seperate_negative(struct node *head,struct node *head1){
-    struct node * temp=head,*temp0=head,*temp1=head1;
+void split(struct node *p){
+    struct node * temp=p,*temp0=p;
     int counter1 = count(temp);
     for (int i = 0; i < counter1; i++){
-        if(temp0->data<=0){
-            temp1=insertlast(temp1,temp0->data);
+        if(poso%2==0){
+            printf(" entrnasdfkljlfjdsf");
+            q=insertlast(q,temp0->data);
+        }
+        else{
+            r=insertlast(r,temp0->data);
         }
         temp0=temp0->next; 
-    }
-    return temp1; 
+        poso++;
+    } 
+    display(q);
+    display(r);
 }
 int main(){
-    struct node *head,*head1=0,*head2=0;
-    head=create();
-    display(head);
+    struct node *p;
+    p=create();
+    display(p);
     int temp0;
-    temp0=count(head);
-    head1=seperate_positive(head,head1);
-    head2=seperate_negative(head,head2);
-    printf("\nPositive elements ->");
-    display(head1);
-    printf("\nNegative elements ->");
-    display(head2);
+    temp0=count(p);
+    split(p);
+    printf("\n\n\n\n\nTotal elements ->");
+    display(p);
+    printf("\nOdd position ->");
+    display(q);
+    printf("\nEven Position ->");
+    display(r);
     return 0;
 }
