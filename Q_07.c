@@ -5,7 +5,8 @@ struct node
 {
     int data;
     struct node * right,*left;
-}*root=0;
+};
+
 struct node * insert(struct node *head,int data){
     if(head==NULL){ 
         struct node * temp=(struct node *)malloc(sizeof(struct node));
@@ -15,15 +16,12 @@ struct node * insert(struct node *head,int data){
         
     }
     else if(data<head->data) {
-        insert(head->left,data) ;
-        printf("working till here\n");
+        head->left=insert(head->left,data) ;
+        printf("\n\n\nworking till here\n");
     }
     else if(data >head->data){
-        insert(head->right,data);
-    }    
-    else if(data==head->data){
-        printf("\n\n\n\n\nerror hai bhai");
-    }
+        head->right=insert(head->right,data);
+    } 
     return head;
 }
 void inorder(struct node* head)
@@ -36,13 +34,19 @@ void inorder(struct node* head)
 }
 int main(){
     int choice =1;
-    while (1){
-        int data;
-        printf("enter data to enter\n");
+    int data;
+    struct node *root=NULL;
+    while (choice){
+        printf("\nenter data to enter\n");
         scanf("%d",&data);
-        root = insert(root,data);
-        inorder(root);
+        root =insert(root,data);
+        printf("press 0 to exit \npress 1 for continue\n");
+        scanf("%d",&choice);
     }
+
+
+    printf("\n\n\n\n");
+    inorder(root);
     return 0;
     
 }
