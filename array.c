@@ -15,10 +15,8 @@ void shift(int * arr,int k ){
 }
 int main(){
     int * arr=(int *)malloc( (n+1)*sizeof(int));
-    //54564546
     printf("enter array");
     for(int i=0;i<n;i++){
-        //asdjkshflads
         scanf("%d",(arr+i));
     }
     printf("\n");
