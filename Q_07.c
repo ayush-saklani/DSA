@@ -9,6 +9,7 @@ Write a C program to create a binary search tree and perform following operation
 */
 #include<stdio.h>
 #include<stdlib.h>
+#include<conio.h>
 int search=0,leaf_count=0,right_count=0;    //global counter for easy stuff
 struct node{
     int data;
@@ -74,6 +75,7 @@ int main(){
     printf("\n\n\n\n");
     inorder(root);
     while (1){
+       // system ("cls\n"); //to clear screen but doesnt work here
         printf("\n");
         printf("Press 1 to search a node\n");
         printf("Press 2 to delete a node\n");
@@ -82,6 +84,9 @@ int main(){
         printf("Press 5 to counting the number of right side nodes\n");
         printf("Press 6 to exit");
         scanf("%d",&choice);
+        printf("\n");
+        inorder(root);
+        printf("\n");
         switch (choice){
         case 1:
             int i;
