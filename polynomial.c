@@ -38,30 +38,47 @@ struct node * create(struct node * head){
     }
     return head;
 }
-struct node * insert(struct node * head){}
-struct node * polsum(struct node * head1,struct node * head2,struct node * head ){
+struct node * insert(struct node * pointer,int data,int expo){
+    struct node * temp=(struct node *)malloc(sizeof(struct node));
+    temp->data=data;
+    temp->expo=expo;
+    temp->next=temp->prev=0;
+    return temp;
+}
+struct node * polsum(struct node * head1,struct node * head2){
    
     struct node * temp1 = head1,* temp2 = head2;
    
-    struct node *  heado = head,* tempo ;
+    struct node *  heado = NULL,* tempo ;
     while(temp1!=NULL&&temp2!=NULL){
         struct node *temp=(struct node *)malloc(sizeof(struct node));
         temp->next=temp->prev=NULL;
         if (temp1->expo==temp2->expo){
             temp->data=temp1->data+temp2->data;
             temp->expo=temp1->expo;
+            temp1=temp1->next;
+            temp2=temp2->next;
         }
-        else if (temp1->expo<temp2->expo){
+        else if (temp1->expo<temp2->expo  ){
             temp->data=temp1->data;
             temp->expo=temp1->expo;
             temp1=temp1->next;
         }
-        else if (temp1->expo>temp2->expo){
+        else if (temp1->expo>temp2->expo  ){
             temp->data=temp2->data;
             temp->expo=temp2->expo;
             temp2=temp2->next;
         }
-
+        else if (temp1==NULL && temp2!=NULL){
+            temp->data=temp2->data;
+            temp->expo=temp2->expo;
+            temp2=temp2->next;
+        }
+        else if (temp2==NULL && temp1!=NULL){
+            temp->data=temp1->data;
+            temp->expo=temp1->expo;
+            temp1=temp1->next;
+        }
         if(heado==NULL){
             heado=temp;
             tempo=heado;
@@ -75,17 +92,16 @@ struct node * polsum(struct node * head1,struct node * head2,struct node * head 
     return heado;
 }
 int main(){
-    struct node * pol1=NULL,* pol2=NULL,*pol3=NULL;
+    struct node * pol1=NULL,* pol2=NULL,*pol3;
     pol1=create(pol1);
     pol2=create(pol2);
     printf("1st equation -> ");
     display(pol1);    
     printf("\n2nd equation -> ");
     display(pol2);
-    pol3=polsum(pol1,pol2,pol3);
+    pol3=polsum(pol1,pol2);
     printf("\nsum equation -> ");
     display(pol3);
     return 0;
 }
         //printf("working\n");
-
