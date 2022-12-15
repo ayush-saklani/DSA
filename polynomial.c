@@ -40,13 +40,14 @@ struct node * create(struct node * head){
 }
 struct node * insert(struct node * head){}
 struct node * polsum(struct node * head1,struct node * head2,struct node * head ){
+   
     struct node * temp1 = head1,* temp2 = head2;
    
-    struct node * tempu  = head ,* tempo = head ;
+    struct node *  heado = head,* tempo ;
     while(temp1!=NULL&&temp2!=NULL){
         struct node *temp=(struct node *)malloc(sizeof(struct node));
         temp->next=temp->prev=NULL;
-        if (temp1->expo=temp2->expo){
+        if (temp1->expo==temp2->expo){
             temp->data=temp1->data+temp2->data;
             temp->expo=temp1->expo;
         }
@@ -60,9 +61,10 @@ struct node * polsum(struct node * head1,struct node * head2,struct node * head 
             temp->expo=temp2->expo;
             temp2=temp2->next;
         }
-        if(tempu==NULL){
-        tempu=temp;
-        tempo=tempu;
+
+        if(heado==NULL){
+            heado=temp;
+            tempo=heado;
         }
         else{
             tempo->next=temp;
@@ -70,7 +72,7 @@ struct node * polsum(struct node * head1,struct node * head2,struct node * head 
             tempo=tempo->next;
         }
     }
-    return tempu;
+    return heado;
 }
 int main(){
     struct node * pol1=NULL,* pol2=NULL,*pol3=NULL;
