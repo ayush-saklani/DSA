@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include <stdio.h>
 void swap(int *a, int *b){
     int t = *a;
     *a = *b;
@@ -46,7 +46,7 @@ void display(int arr[], int size){
 }
 int main(){
     int arr[100],n;
-	printf("Enter array size \n");
+	printf("Enter array size -> ");
     scanf("%d",&n);
     printf("Enter array -> ");
     for(int i = 0 ; i<n ; i++){
