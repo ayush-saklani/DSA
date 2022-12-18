@@ -1,7 +1,7 @@
 /*  incompldete code right now
 This code works - by tempest.
 Write a C program to create a binary search tree and perform following operations: 
-         1) Search a particular key.  
+         1) Search a particular data.  
          2) Delete a node from the tree. 
          3) Find total number of leaf nodes  
          4) Find height of a binary search tree 
@@ -25,7 +25,7 @@ struct node * insert(struct node *head,int data){
     }
     else if(data<head->data) {
         head->left=insert(head->left,data) ;
-        printf("\n\n\nworking till here\n");
+       // printf("\n\n\nworking till here\n");
     }
     else if(data >head->data){
         head->right=insert(head->right,data);
@@ -60,19 +60,62 @@ void counting_right_nodes(struct node* head){
         counting_right_nodes(head->right);
     }
 }
+struct node* minValueNode(struct node* node){
+    struct node* current = node;
+    while (current && current->left != NULL)
+        current = current->left;
+    return current;
+}
+struct node* deleteNode(struct node* root, int data){
+    if (root == NULL)
+        return root;
+    if (data < root->data)
+        root->left = deleteNode(root->left, data);
+    else if (data > root->data)
+        root->right = deleteNode(root->right, data);
+    else{
+        if (root->left == NULL) {
+            struct node* temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if (root->right == NULL){
+            struct node* temp = root->left;
+            free(root);
+            return temp;
+        }
+        struct node* temp = minValueNode(root->right);
+        root->data = temp->data;
+        root->right = deleteNode(root->right, temp->data);
+    }
+    return root;
+}
+int maxDepth(struct node* node){
+    if (node == NULL)
+        return 0;
+    else{
+        int lDepth = maxDepth(node->left);
+        int rDepth = maxDepth(node->right);
+        
+        if (lDepth > rDepth)
+            return (lDepth + 1);
+        else
+            return (rDepth + 1);
+    }
+}
 int main(){
     //creating a bst
     int choice =1,data;
     struct node *root=NULL;
     while (choice){
-        printf("\nenter data to enter\n");
+        printf("enter data to enter\n");
         scanf("%d",&data);
         root =insert(root,data);
-        printf("press 0 to exit \npress 1 for continue\n");
+        printf("press 0 to exit  press 1 for continue\n");
         scanf("%d",&choice);
     }
     //bst creation completed
-    printf("\n\n\n\n");
+
     inorder(root);
     while (1){
        // system ("cls\n"); //to clear screen but doesnt work here
@@ -97,9 +140,10 @@ int main(){
             search=0;
             break;
         case 2:
-
-
-
+            int j;
+            printf("enter data to delete\n");
+            scanf("%d",&j);
+            root = deleteNode(root, j);
             break;
         case 3:
             counting_leaf_nodes(root);
@@ -107,9 +151,9 @@ int main(){
             leaf_count=0;
             break;
         case 4:
-
-
-
+            int k;
+            k=maxDepth(root);
+            printf("height is -> %d",k);
             break;
         case 5:
             counting_right_nodes(root->right);
@@ -121,85 +165,3 @@ int main(){
         }
     }
 }
-/*
-below code is stolen from net and above is done by tempest ;
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct Node Node;
-
-// Define the Tree Node here
-struct Node {
-    int value;
-    // Pointers to the left and right children
-    Node* left, *right;
-};
-
-
-Node* init_tree(int data) {
-    // Creates the tree and returns the
-    // root node
-    Node* root = (Node*) malloc (sizeof(Node));
-    root->left = root->right = NULL;
-    root->value = data;
-    return root;
-}
-
-Node* create_node(int data) {
-    // Creates a new node
-    Node* node = (Node*) malloc (sizeof(Node));
-    node->value = data;
-    node->left = node->right = NULL;
-    return node;
-}
-
-void free_tree(Node* root) {
-    // Deallocates memory corresponding
-    // to every node in the tree.
-    Node* temp = root;
-    if (!temp)
-        return;
-    free_tree(temp->left);
-    free_tree(temp->right);
-    if (!temp->left && !temp->right) {
-        free(temp);
-        return;
-    }
-}
-
-int tree_height(Node* root) {
-    // Get the height of the tree
-    if (!root)
-        return 0;
-    else {
-        // Find the height of both subtrees
-        // and use the larger one
-        int left_height = tree_height(root->left);
-        int right_height = tree_height(root->right);
-        if (left_height >= right_height)
-            return left_height + 1;
-        else
-            return right_height + 1;
-    }
-}
-
-int main() {
-    // Program to demonstrate finding the height of a Binary Tree
-
-    // Create the root node having a value of 10
-    Node* root = init_tree(10);
-    
-    // Insert nodes onto the tree
-    root->left = create_node(20);
-    root->right = create_node(30);
-    root->left->left = create_node(40);
-    root->left->right = create_node(50);
-
-    // Find the height of the tree
-    int height = tree_height(root);
-    printf("Height of the Binary Tree: %d\n", height);
-
-    // Free the tree!
-    free_tree(root);
-    return 0;
-}*/
