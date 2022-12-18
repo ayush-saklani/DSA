@@ -1,74 +1,38 @@
-#include <stdio.h>
-#include <stdlib.h>
-struct node {
-    int vertex;
-    struct node* next;
-};
-struct node* createNode(int v);
-struct Graph{
-    int numVertices;
-    int* visited;
-    struct node** adjLists;
-};
-void DFS(struct Graph* graph, int vertex) {
-    struct node* adjList = graph->adjLists[vertex];
-    struct node* temp = adjList;
-    graph->visited[vertex] = 1;
-    printf("Visited %d \n", vertex);
-
-    while (temp != NULL) {
-        int connectedVertex = temp->vertex;
-        if (graph->visited[connectedVertex] == 0){
-            DFS(graph, connectedVertex);
-        }
-        temp = temp->next;
-    }
-}
-struct node* createNode(int v) {
-    struct node* newNode = malloc(sizeof(struct node));
-    newNode->vertex = v;
-    newNode->next = NULL;
-    return newNode;
-}
-struct Graph* createGraph(int vertices) {
-    struct Graph* graph = malloc(sizeof(struct Graph));
-    graph->numVertices = vertices;
-    graph->adjLists = malloc(vertices * sizeof(struct node*));
-    graph->visited = malloc(vertices * sizeof(int));
+#include<stdio.h>
+int a[20][20], reach[20], n;
+void dfs (int v){
     int i;
-    for (i = 0; i < vertices; i++) {
-        graph->adjLists[i] = NULL;
-        graph->visited[i] = 0;
+    reach[v] = 1;
+        for (i = 1; i<= n; i++)
+            if (a[v][i] && !reach[i]){
+                printf ("\n %d->%d", v, i);
+                dfs(i);
+            }
+}   
+int main (){
+    int i, j, count = 0;
+    printf ("Enter number of vertices:");
+    scanf ("%d", &n);
+    for (i = 1; i<= n; i++){
+        reach[i] = 0;
+        for (j = 1; j <= n; j++)
+            a[i][j] = 0;
     }
-    return graph;
-}
-void addEdge(struct Graph* graph, int src, int dest) {
-    struct node* newNode = createNode(dest);
-    newNode->next = graph->adjLists[src];
-    graph->adjLists[src] = newNode;
-    newNode = createNode(src);
-    newNode->next = graph->adjLists[dest];
-    graph->adjLists[dest] = newNode;
-}
-void printGraph(struct Graph* graph) {
-    int v;
-    for (v = 0; v < graph->numVertices; v++) {
-        struct node* temp = graph->adjLists[v];
-        printf("\n Adjacency list of vertex %d\n ", v);
-        while (temp){
-            printf("%d -> ", temp->vertex);
-            temp = temp->next;
-        }
-        printf("\n");
+    printf ("Enter the adjacency matrix:\n");
+    for (i = 1; i<= n; i++)
+        for (j = 1; j <= n; j++)
+            scanf ("%d", &a[i][j]);
+            printf("\nThe DFS traversal is:  \n");
+            dfs (1);
+    printf ("\n");
+    for (i = 1; i<= n; i++){
+        if (reach[i])
+	    count++;
     }
+    if (count == n)
+        printf ("Graph is connected");
+    else
+        printf ("Graph is not connected");
+return 0;
 }
-int main() {
-    struct Graph* graph = createGraph(4);
-    addEdge(graph, 0, 1);
-    addEdge(graph, 0, 2);
-    addEdge(graph, 1, 2);
-    addEdge(graph, 2, 3);
-    printGraph(graph);
-    DFS(graph, 2);
-    return 0;
-}
+
