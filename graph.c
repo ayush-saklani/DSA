@@ -10,6 +10,7 @@ struct adjacency_node{
 };
 struct adjacency{
     struct adjacency_node * head;
+    int * visited;
 };
 struct graph * create(int vertices){
     struct graph *graphi=(struct graph * )malloc(sizeof(struct graph));
@@ -17,6 +18,7 @@ struct graph * create(int vertices){
     graphi->vertices=vertices;
     for (int i = 0; i < vertices; i++){
         graphi->array[i].head=NULL;
+        graphi->array->visited=0;
     }
     return graphi;
 }
@@ -25,7 +27,7 @@ void display(struct graph* graphi){
         struct adjacency_node * temp= graphi->array[i].head;
         printf("\nAdjacent members of %d th vertex \n",i);
         while (temp){
-            printf("%d - " ,temp->data);
+            printf(" - %d" ,temp->data);
             temp=temp->next;
         }
     }
@@ -79,6 +81,21 @@ struct graph * addedge(struct graph * graphi,int source , int destination ){
     }
     return graphi;
 }
+void DFS(struct graph* graphi, int vertex){
+	struct adjacency * temp  = graphi->array[vertex].head;
+
+	graphi->array[vertex].visited = 1;
+	printf("Visited %d \n", graphi->array[vertex]);
+
+	while (temp != NULL) {
+		int connectedVertex = temp->head;
+
+		if (graphi->array[connectedVertex].visited == 0){
+    		DFS(graphi, connectedVertex);
+		}
+		temp->head = temp->head->next;
+	}
+}
 int main(){
     int n,a,b,choice=1;
     printf("enter number of vertices\n");
@@ -94,5 +111,6 @@ int main(){
         scanf("%d",&choice);
     }
     display(graphi);
+    DFS(graphi,0);
     return 0;
 }

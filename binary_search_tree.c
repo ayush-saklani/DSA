@@ -21,7 +21,6 @@ struct node * insert(struct node *head,int data){
         temp->data=data;
         temp->right=temp->left=NULL;
         head=temp;
-        
     }
     else if(data<head->data) {
         head->left=insert(head->left,data) ;
@@ -33,7 +32,7 @@ struct node * insert(struct node *head,int data){
     return head;
 }
 void inorder(struct node* head){
-    if (head != NULL) {
+    if(head != NULL){
         inorder(head->left);
         printf("%d ", head ->data);
         inorder(head->right);
@@ -110,7 +109,7 @@ int main(){
     while (choice){
         printf("enter data to enter\n");
         scanf("%d",&data);
-        root =insert(root,data);
+        root = insert(root,data);
         printf("press 0 to exit  press 1 for continue\n");
         scanf("%d",&choice);
     }
